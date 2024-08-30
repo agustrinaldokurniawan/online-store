@@ -37,6 +37,25 @@ func (s *server) GetUser(ctx context.Context, req *pb.GetUserRequest) (*pb.GetUs
 	return response, nil
 }
 
+// Implement GetUserProfile method
+func (s *server) GetUserProfile(ctx context.Context, req *pb.GetUserProfileRequest) (*pb.GetUserProfileResponse, error) {
+	// Log the request details
+	log.Printf("Received GetUserProfile request with ID: %s", req.GetId())
+
+	response := &pb.GetUserProfileResponse{
+		Id:      req.GetId(),
+		Name:    "John Doe",
+		Email:   "john.doe@example.com",
+		Phone:   "1234567890",
+		Address: "123 Main St",
+	}
+
+	// Log the response details
+	log.Printf("Returning GetUserProfile response: %+v", response)
+
+	return response, nil
+}
+
 // RegisterServices registers the gRPC services with the server
 func RegisterServices(s *grpc.Server) {
 	pb.RegisterUserServiceServer(s, NewServer())

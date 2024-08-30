@@ -12,6 +12,11 @@ service UserService {
             get: "/v1/user/{id}"
         };
     }
+    rpc GetUserProfile(GetUserProfileRequest) returns (GetUserProfileResponse) {
+        option (google.api.http) = {
+            get: "/v1/user/profile/{id}"
+        };
+    }
 }
 
 message GetUserRequest {
@@ -22,4 +27,16 @@ message GetUserResponse {
     string id = 1;
     string name = 2;
     string email = 3;
+}
+
+message GetUserProfileRequest {
+    string id = 1;
+}
+
+message GetUserProfileResponse {
+    string id = 1;
+    string name = 2;
+    string email = 3;
+    string phone = 4;
+    string address = 5;
 }

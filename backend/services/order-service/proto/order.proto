@@ -4,19 +4,25 @@ package order;
 
 option go_package = ".";
 
+import "google/api/annotations.proto";
+
 service OrderService {
-    rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse);
+    rpc GetMyOrder(GetMyOrderRequest) returns (GetMyOrderResponse) {
+        option (google.api.http) = {
+            get: "/v1/order/my"
+        };
+    }
 }
 
-message CreateOrderRequest {
+message GetMyOrderRequest {
     string user_id = 1;
-    repeated string product_ids = 2;
 }
 
-message CreateOrderResponse {
-    string id = 1;
-    string user_id = 2;
-    repeated string product_ids = 3;
-    float total_price = 4;
-    string status = 5;
+message GetMyOrderResponse {
+    string  user_id = 1;
+    string order_id = 2;
+    string product_id = 3;
+    int32 quantity = 4;
+    float price = 5;
+    string status = 6;
 }

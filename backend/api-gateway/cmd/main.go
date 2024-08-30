@@ -6,35 +6,16 @@ import (
 	"net/http"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	"google.golang.org/grpc"
 
-	pb "api-gateway/pb"
+	"api-gateway/internal/handler"
 )
-
-// ServiceConfig holds the configuration for each service.
-type ServiceConfig struct {
-	Name    string
-	Address string
-}
-
-// RegisterServices registers all services with the mux based on the given service configurations.
-func RegisterServices(ctx context.Context, mux *runtime.ServeMux, services []ServiceConfig) error {
-	for _, svc := range services {
-		opts := []grpc.DialOption{grpc.WithInsecure()}
-		err := pb.RegisterUserServiceHandlerFromEndpoint(ctx, mux, svc.Address, opts)
-		if err != nil {
-			return err
-		}
-		log.Printf("Registered service %s at %s", svc.Name, svc.Address)
-	}
-	return nil
-}
 
 func main() {
 	// Define service configurations
-	services := []ServiceConfig{
+	services := []handler.ServiceConfig{
 		{Name: "UserService", Address: "user-service:50051"},
-		// Add more services here
+		{Name: "ProductService", Address: "product-service:50052"},
+		{Name: "OrderService", Address: "order-service:50053"},
 	}
 
 	ctx := context.Background()
@@ -44,7 +25,7 @@ func main() {
 	mux := runtime.NewServeMux()
 
 	// Register services
-	if err := RegisterServices(ctx, mux, services); err != nil {
+	if err := handler.RegisterServices(ctx, mux, services); err != nil {
 		log.Fatalf("Failed to register services: %v", err)
 	}
 

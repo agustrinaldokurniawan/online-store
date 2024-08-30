@@ -2,10 +2,16 @@ syntax = "proto3";
 
 package product;
 
+import "google/api/annotations.proto";
+
 option go_package = ".";
 
 service ProductService {
-    rpc GetProduct(GetProductRequest) returns (GetProductResponse);
+    rpc GetProduct(GetProductRequest) returns (GetProductResponse) {
+        option (google.api.http) = {
+            get: "/v1/product/{id}"
+        };
+    }
 }
 
 message GetProductRequest {
