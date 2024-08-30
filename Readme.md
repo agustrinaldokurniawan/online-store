@@ -1,3 +1,5 @@
+## Article
+[Build basic microservice online store backend with Golang use Api Gateway Pattern](https://dev.to/agustrinaldokurniawan/build-basic-microservice-online-store-backend-with-golang-use-api-gateway-pattern-1bf)
 ## How to run the project
 Run on windows use wsl
 
